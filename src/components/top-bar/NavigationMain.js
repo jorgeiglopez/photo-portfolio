@@ -3,7 +3,7 @@ const NavigationMain = () => {
         <div>
             <p>Navigation Bar</p>
         </div>
-    )
-}
+    );
+};
 
-export default NavigationMain
+export default NavigationMain;
