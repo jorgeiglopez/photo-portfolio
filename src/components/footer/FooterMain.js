@@ -1,13 +1,7 @@
-import { Footer } from 'mdbreact';
+import classes from './FooterMain.module.css';
 
 const FooterMain = () => {
-    return (
-        <Footer>
-            <div>
-                <h3>I'm the footer!</h3>
-            </div>
-        </Footer>
-    );
+	return <footer className={classes.footer}>I'm th footer</footer>;
 };
 
 export default FooterMain;
