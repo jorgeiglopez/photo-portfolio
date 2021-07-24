@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&display=swap');
 
 :root{
-  --primary: #efb6b2;
+  --primary: #00264f;
   --secondary: #4e4e4e;
   --error: #ff4a4a;
 }
@@ -17,8 +17,8 @@ body{
 }
 .title h1{
   color: var(--primary);
-  font-size: 1.2rem;
   letter-spacing: 2px;
+  font-size: 1.2rem;
   font-weight: normal;
 }
 .title h2, .title p{

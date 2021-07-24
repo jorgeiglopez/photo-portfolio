@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import classes from './ImageDetail.module.css';
+import classes from './ImageZoom.module.css';
 
 const ImageDetail = (props) => {
     return (
