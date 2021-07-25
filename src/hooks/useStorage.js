@@ -1,35 +1,53 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { projectStorage, projectFirestore, timestamp } from '../firebase/config';
 
-const useStorage = (file) => {
-    const [progress, setProgress] = useState(0);
-    const [error, setError] = useState(null);
-    const [url, setUrl] = useState(null);
+const useStorage = (file, album) => {
+	const [progress, setProgress] = useState(0);
+	const [error, setError] = useState(null);
+	const [url, setUrl] = useState(null);
 
-    useEffect(() => {
-        const storageRef = projectStorage.ref(file.name);
-        const collectionRef = projectFirestore.collection('images');
+	const filePath = `albums/${album}/${file.name}`;
+	console.log('-- PATH --> ', filePath);
 
-        storageRef.put(file).on(
-            'state_changed',
-            (snap) => {
-                let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
-                setProgress(percentage.toFixed(2));
-            },
-            (err) => {
-                setError(err);
-            },
-            async () => {
-                const url = await storageRef.getDownloadURL();
-                const createdAt = timestamp();
+	useEffect(() => {
+		const storageRef = projectStorage.ref(filePath);
+		const collectionRef = projectFirestore.collection('images');
 
-                collectionRef.add({ url, createdAt }); // save in db the url for later access
-                setUrl(url);
-            }
-        );
-    }, [file]);
+		storageRef.put(file).on(
+			'state_changed',
+			(snap) => {
+				let percentage = (snap.bytesTransferred / snap.totalBytes) * 100;
+				setProgress(percentage.toFixed(2));
+			},
+			(err) => {
+				setError(err);
+			},
+			async () => {
+				const url = await storageRef.getDownloadURL();
+				const metadata = await storageRef.getMetadata();
+				console.log('METADATA: -------- ', metadata);
+				const createdAt = timestamp();
 
-    return { progress, error, url };
+				// define as interface v1
+				collectionRef.add({
+					album: album,
+					name: file.name,
+					path: filePath,
+					size: file.size,
+					type: file.type,
+					version: 1,
+					urls: {
+						original: url,
+						thumbnail: url,
+					},
+					createdAt,
+				});
+				setUrl(url);
+			}
+		);
+	}, [file]);
+
+	return { progress, error, url };
 };
 
 export default useStorage;

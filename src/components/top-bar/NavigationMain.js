@@ -1,10 +1,12 @@
 import classes from './NavigationMain.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const NavigationMain = () => {
 	return (
 		<header className={classes.header}>
-			<div className={classes.logo}>Photo Portfolio</div>
+			<div className={classes.logo}>
+				<Link to='/home'>Photo Portfolio</Link>
+			</div>
 			<div className={classes.menu}>
 				<NavLink to='/all-albums' className={classes.link}>
 					<div className={classes.title}>Work</div>

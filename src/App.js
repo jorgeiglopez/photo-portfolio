@@ -8,6 +8,7 @@ import FourOFour from './pages/404';
 
 import Layout from './components/Layout';
 import AllAlbums from './pages/AllAlbums';
+import CreateAlbum from './pages/CreateAlbum';
 
 function App() {
 	return (
@@ -34,6 +35,9 @@ function App() {
 						</Route>
 						<Route path='/all-albums'>
 							<AllAlbums />
+						</Route>
+						<Route path='/upload'>
+							<CreateAlbum />
 						</Route>
 						<Route path='*'>
 							<FourOFour />
