@@ -1,34 +1,23 @@
-import React, { useState } from 'react';
-import ProgressBar from './ProgressBar';
+import React, { useState, useEffect } from 'react';
 import classes from './UploadForm.module.css';
-
-const validImagesTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+import FileSelector from './FileSelector';
+import UploadManager from './UploadManager';
 
 const UploadForm = (props) => {
 	const [file, setFile] = useState(null);
 	const [error, setError] = useState(null);
-
-	const onChangeHandler = (event) => {
-		const selectedFile = event.target.files[0];
-		setFile(selectedFile);
-		if (selectedFile && validImagesTypes.includes(selectedFile.type)) {
-			setError(null);
-		} else {
-			setFile(null);
-			setError('Incorrect file type. Must be an image: <.jpeg> or <.png>');
-		}
-	};
+	const [album, setAlbum] = useState(null);
 
 	return (
 		<form className={classes.form}>
-			<label>
-				<input type='file' onChange={onChangeHandler} />
-				<span>+</span>
-			</label>
+			<h1>Create Album</h1>
+			<h3>Name of the album: </h3>
+			<input type='text' onChange={(e) => setAlbum(e.target.value)}></input>
+
+			<FileSelector setFile={setFile} setError={setError} />
 			<div className={classes.output}>
 				{error && <div className={classes.error}>{error}</div>}
-				{file && <div>{file.name}</div>}
-				{file && <ProgressBar file={file} setFile={setFile} album={props.album} />}
+				{file && <UploadManager file={file} album={album} setFile={setFile} setError={setError}/>}
 			</div>
 		</form>
 	);

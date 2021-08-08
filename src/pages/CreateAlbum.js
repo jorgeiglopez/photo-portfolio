@@ -9,10 +9,7 @@ const CreateAlbum = () => {
 
 	return (
 		<div>
-			<h1>Create Album</h1>
-			<h3>Name of the album: </h3>
-			<input type='text' onChange={(e) => setAlbum(e.target.value)}></input>
-			<UploadForm album={album} />
+			<UploadForm />
 			<ImageGrid setSelectedImg={setSelectedImg} />
 			{selectedImg && <ImageZoom url={selectedImg} setSelectedImg={setSelectedImg} />}
 		</div>

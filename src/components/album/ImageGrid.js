@@ -16,10 +16,10 @@ const ImageGrid = (props) => {
                         layout
                         whileHover={{ opacity: 0.8 }}
                         onClick={() => {
-                            props.setSelectedImg(doc.url);
+                            props.setSelectedImg(doc.urls && doc.urls.original);
                         }}>
                         <motion.img
-                            src={doc.url}
+                            src={doc.urls && doc.urls.thumbnail}
                             alt='Image loading....'
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}

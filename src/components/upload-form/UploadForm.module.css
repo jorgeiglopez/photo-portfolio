@@ -8,6 +8,7 @@ form{
     opacity: 0;
   }
   label{
+    margin-top: 115px;
     display: block;
     width: 37px;
     height: 37px;

@@ -6,10 +6,9 @@ const useStorage = (file, album) => {
 	const [error, setError] = useState(null);
 	const [url, setUrl] = useState(null);
 
-	const filePath = `albums/${album}/${file.name}`;
-	console.log('-- PATH --> ', filePath);
-
+	
 	useEffect(() => {
+		const filePath = `albums/${album}/${file.name}`;
 		const storageRef = projectStorage.ref(filePath);
 		const collectionRef = projectFirestore.collection('images');
 
@@ -34,6 +33,7 @@ const useStorage = (file, album) => {
 					name: file.name,
 					path: filePath,
 					size: file.size,
+					sizeMb: (file.size / 1000000).toFixed(2),
 					type: file.type,
 					version: 1,
 					urls: {

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import AlbumHeader from '../components/album/AlbumHeader';
 import ImageGrid from '../components/album/ImageGrid';
 import ImageZoom from '../components/album/ImageZoom';
+import { useParams, useRouteMatch } from 'react-router-dom';
 
-const GalleryPage = (props) => {
+const AlbumPage = (props) => {
 	const [selectedImg, setSelectedImg] = useState(null);
+	// const match = useRouteMatch();
+  	// const params = useParams();
 
 	return (
 		<div>
@@ -15,4 +18,4 @@ const GalleryPage = (props) => {
 	);
 };
 
-export default GalleryPage;
+export default AlbumPage;

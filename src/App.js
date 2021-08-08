@@ -9,12 +9,13 @@ import FourOFour from './pages/404';
 import Layout from './components/Layout';
 import AllAlbums from './pages/AllAlbums';
 import CreateAlbum from './pages/CreateAlbum';
+import AlbumPage from './pages/AlbumPage';
 
 function App() {
 	return (
 		<div className='App'>
 			<Layout>
-				<Suspense
+				<Suspense // check if is it working
 					fallback={
 						<div className='centered'>
 							<LoadingSpinner />
@@ -33,8 +34,11 @@ function App() {
 						<Route path='/about-me'>
 							<AboutMe />
 						</Route>
-						<Route path='/all-albums'>
+						<Route path='/all-albums' exact>
 							<AllAlbums />
+						</Route>
+						<Route path='/all-albums/:albumId'>
+							<AlbumPage />
 						</Route>
 						<Route path='/upload'>
 							<CreateAlbum />
