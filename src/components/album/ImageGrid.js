@@ -2,6 +2,7 @@ import React from 'react';
 import useFirestore from '../../hooks/useFirestore';
 import { motion } from 'framer-motion';
 import classes from './ImageGrid.module.css'
+import ProgressiveImage from 'react-progressive-image';
 
 const ImageGrid = (props) => {
     const { docs } = useFirestore('images');
@@ -18,13 +19,11 @@ const ImageGrid = (props) => {
                         onClick={() => {
                             props.setSelectedImg(doc.urls && doc.urls.original);
                         }}>
-                        <motion.img
-                            src={doc.urls && doc.urls.thumbnail}
-                            alt='Image loading....'
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1 }}
-                        />
+                        <ProgressiveImage src={doc.urls.original} placeholder={doc.urls.thumbnail}>
+                            {(src, loading) => (
+                                <img className={loading? classes['img-loading']: ''} src={src} alt="Loading image..." />
+                            )}
+                        </ProgressiveImage>
                     </motion.div>
                 ))}
         </div>

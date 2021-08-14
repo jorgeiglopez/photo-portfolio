@@ -1,0 +1,16 @@
+1 - Progressive image loading (manual resize prior upload)
+--------------------------------
+implement react-progressive-image
+
+
+
+
+2 - Image resizing on load (lambda or equivalent on firebase)
+--------------------------------
+
+
+
+
+3 - Local cache for images
+--------------------------------
+
