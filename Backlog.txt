@@ -1,13 +1,14 @@
 1 - Progressive image loading (manual resize prior upload)
 --------------------------------
-implement react-progressive-image
+implement react-progressive-image (DONE)
 
 
 
 
 2 - Image resizing on load (lambda or equivalent on firebase)
 --------------------------------
-
+Change firestore database document id, from auto-generated to file name (DONE)
+Or allow to upload different sizes at once. (Bulk upload)
 
 
 

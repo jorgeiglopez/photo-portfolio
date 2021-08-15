@@ -9,7 +9,7 @@ const useStorage = (file, album) => {
 	
 	useEffect(() => {
 		const filePath = `albums/${album}/${file.name}`;
-		const storageRef = projectStorage.ref(filePath);
+		const storageRef = projectStorage.ref().child(filePath);
 		const collectionRef = projectFirestore.collection('images');
 
 		storageRef.put(file).on(
@@ -28,7 +28,7 @@ const useStorage = (file, album) => {
 				const createdAt = timestamp();
 
 				// define as interface v1
-				collectionRef.add({
+				collectionRef.doc(file.name).set({
 					album: album,
 					name: file.name,
 					path: filePath,
