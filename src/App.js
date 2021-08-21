@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Contact from './pages/Contact';
 import AboutMe from './pages/AboutMe';
 import FourOFour from './pages/404';
+import Discovery from './pages/Discovery';
 
 import Layout from './components/Layout';
 import AllAlbums from './pages/AllAlbums';
@@ -37,11 +38,14 @@ function App() {
 						<Route path='/all-albums' exact>
 							<AllAlbums />
 						</Route>
-						<Route path='/all-albums/:albumId'>
+						<Route path='/all-albums/:albumName'>
 							<AlbumPage />
 						</Route>
 						<Route path='/upload'>
 							<CreateAlbum />
+						</Route>
+                        <Route path='/discovery'>
+							<Discovery />
 						</Route>
 						<Route path='*'>
 							<FourOFour />
