@@ -5,8 +5,10 @@ import classes from './ImageGrid.module.css'
 import ProgressiveImage from 'react-progressive-image';
 
 const ImageGrid = (props) => {
-    const { docs } = useFirestore('images');
+    const highResolution = props.highResolution || 'FULL';
+    const lowResolution = props.lowResolution || '800px';
 
+    const { docs } = useFirestore(props.albumName);
     return (
         <div className={classes['img-grid']}>
             {docs &&
@@ -17,9 +19,9 @@ const ImageGrid = (props) => {
                         layout
                         whileHover={{ opacity: 0.8 }}
                         onClick={() => {
-                            props.setSelectedImg(doc.urls && doc.urls.original);
+                            props.setSelectedImg(doc[highResolution] && doc[highResolution].url);
                         }}>
-                        <ProgressiveImage src={doc.urls.original} placeholder={doc.urls.thumbnail}>
+                        <ProgressiveImage src={doc[highResolution].url} placeholder={doc[lowResolution].url}>
                             {(src, loading) => (
                                 <img className={loading? classes['img-loading']: ''} src={src} alt="Loading image..." />
                             )}

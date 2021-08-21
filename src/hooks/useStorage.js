@@ -8,7 +8,7 @@ const useStorage = (file, album) => {
 
 	
 	useEffect(() => {
-		const filePath = `albums/${album}/${file.name}`;
+		const filePath = `${album}/${file.name}`;
 		const storageRef = projectStorage.ref().child(filePath);
 		const collectionRef = projectFirestore.collection('images');
 
@@ -23,11 +23,8 @@ const useStorage = (file, album) => {
 			},
 			async () => {
 				const url = await storageRef.getDownloadURL();
-				const metadata = await storageRef.getMetadata();
-				console.log('METADATA: -------- ', metadata);
 				const createdAt = timestamp();
 
-				// define as interface v1
 				collectionRef.doc(file.name).set({
 					album: album,
 					name: file.name,

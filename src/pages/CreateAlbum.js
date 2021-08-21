@@ -8,13 +8,12 @@ const CreateAlbum = () => {
 	const [album, setAlbum] = useState('');
 	const [selectedImg, setSelectedImg] = useState(null);
 
-	const list = useDiscovery();
-	console.log(list)
+	// useDiscovery("tea-oil-cup");
 
 	return (
 		<div>
 			<UploadForm />
-			<ImageGrid setSelectedImg={setSelectedImg} />
+			<ImageGrid setSelectedImg={setSelectedImg} albumName="tea-oil-cup"/>
 			{selectedImg && <ImageZoom url={selectedImg} setSelectedImg={setSelectedImg} />}
 		</div>
 	);
