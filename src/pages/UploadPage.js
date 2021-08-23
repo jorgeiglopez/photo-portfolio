@@ -1,9 +1,9 @@
 import UploadForm from '../components/upload-form/UploadForm';
 import ImageGrid from '../components/album/ImageGrid';
-import ImageZoom from '../components/album/ImageZoom';
+import ImageOverlay from '../components/album/ImageOverlay';
 import { useState } from 'react';
 
-const CreateAlbum = () => {
+const UploadPage = () => {
 	const [album, setAlbum] = useState(null);
 	const [selectedImg, setSelectedImg] = useState(null);
 
@@ -11,9 +11,9 @@ const CreateAlbum = () => {
 		<div>
 			<UploadForm album={album} setAlbum={setAlbum} />
 			<ImageGrid setSelectedImg={setSelectedImg} albumName={album} />
-			{selectedImg && <ImageZoom url={selectedImg} setSelectedImg={setSelectedImg} />}
+			{selectedImg && <ImageOverlay url={selectedImg} setSelectedImg={setSelectedImg} />}
 		</div>
 	);
 };
 
-export default CreateAlbum;
+export default UploadPage;

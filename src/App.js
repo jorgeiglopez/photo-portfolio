@@ -1,18 +1,22 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import LoadingSpinner from './components/LoadingSpinner';
-import Home from './pages/Home';
-import Contact from './pages/Contact';
-import AboutMe from './pages/AboutMe';
-import FourOFour from './pages/404';
-import Discovery from './pages/Discovery';
-
 import Layout from './components/Layout';
-import AllAlbums from './pages/AllAlbums';
-import CreateAlbum from './pages/CreateAlbum';
+import LoadingSpinner from './components/LoadingSpinner';
+
+import HomePage from './pages/HomePage';
+import AboutMePage from './pages/AboutMePage';
+import AlbumsPage from './pages/AlbumsPage';
 import AlbumPage from './pages/AlbumPage';
+import ContactPage from './pages/ContactPage';
+import DiscoveryPage from './pages/DiscoveryPage';
+import FourOFour from './pages/404Page';
+import UploadPage from './pages/UploadPage';
 
 function App() {
+
+	// TODO: Load the firestore info here for quick response
+	// TODO: Add Error Boundaries
+
 	return (
 		<div className='App'>
 			<Layout>
@@ -27,25 +31,25 @@ function App() {
 							<Redirect to='/home' />
 						</Route>
 						<Route path='/home'>
-							<Home />
+							<HomePage />
 						</Route>
 						<Route path='/contact'>
-							<Contact />
+							<ContactPage />
 						</Route>
 						<Route path='/about-me'>
-							<AboutMe />
+							<AboutMePage />
 						</Route>
-						<Route path='/all-albums' exact>
-							<AllAlbums />
+						<Route path='/albums' exact>
+							<AlbumsPage />
 						</Route>
-						<Route path='/all-albums/:albumName'>
+						<Route path='/albums/:albumName'>
 							<AlbumPage />
 						</Route>
 						<Route path='/upload'>
-							<CreateAlbum />
+							<UploadPage />
 						</Route>
-                        <Route path='/discovery/:albumName'>
-							<Discovery />
+						<Route path='/discovery/:albumName'>
+							<DiscoveryPage />
 						</Route>
 						<Route path='*'>
 							<FourOFour />

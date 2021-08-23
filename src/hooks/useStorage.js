@@ -10,7 +10,7 @@ const useStorage = (file, album) => {
 		const filePath = `${album}/${file.name}`;
 		const storageRef = projectStorage.ref().child(filePath);
 		const collectionRef = projectFirestore.collection('images');
-
+		console.log("useStorage - Uploading file")
 		storageRef.put(file).on(
 			'state_changed',
 			(snap) => {
@@ -41,7 +41,7 @@ const useStorage = (file, album) => {
 				setUrl(url);
 			}
 		);
-	}, [file]);
+	}, [file, album]);
 
 	return { progress, error, url };
 };

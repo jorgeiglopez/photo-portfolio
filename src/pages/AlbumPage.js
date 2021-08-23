@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import AlbumHeader from '../components/album/AlbumHeader';
 import ImageGrid from '../components/album/ImageGrid';
-import ImageZoom from '../components/album/ImageZoom';
+import ImageOverlay from '../components/album/ImageOverlay';
 import { useParams } from 'react-router-dom';
-import { useDiscoveryAll } from '../hooks/useDiscovery';
 
-const AlbumPage = (props) => {
+const AlbumPage = () => {
 	const [selectedImg, setSelectedImg] = useState(null);
-	// const match = useRouteMatch();
 	const params = useParams();
 
-	useDiscoveryAll();
+	window.addEventListener('keydown', (event) => {
+		if (event.key === 'Escape') {
+			setSelectedImg(null);
+		}
+	});
 
 	return (
-		<div>
+		<div onKeyPress={(event) => console.log(event.key)}>
 			<AlbumHeader albumName={params.albumName} />
 			<ImageGrid setSelectedImg={setSelectedImg} albumName={params.albumName} />
-			{selectedImg && <ImageZoom url={selectedImg} setSelectedImg={setSelectedImg} />}
+			{selectedImg && <ImageOverlay url={selectedImg} setSelectedImg={setSelectedImg} />}
 		</div>
 	);
 };

@@ -3,26 +3,25 @@ import { projectFirestore } from '../firebase/config';
 
 const useFirestore = (collection) => {
 	const [docs, setDocs] = useState([]);
+    const [error, setError] = useState(null) // TODO: implement error handling.
 
 	useEffect(() => {
 		if (!collection) {
-			return docs;
+			return [];
 		}
 		const unsubscribe = projectFirestore
 			.collection(collection)
 			.orderBy('createdOn', 'desc')
 			.onSnapshot((snap) => {
-				let documents = [];
-				snap.forEach((doc) => {
-					documents.push({ ...doc.data(), id: doc.id });
+                snap.forEach((doc) => {
+                    console.log("useFirestore - Reading DB", doc.data())
+                    setDocs(prevDocs => [...prevDocs, { ...doc.data(), id: doc.id }])
 				});
-				setDocs(documents);
 			});
-
 		return () => unsubscribe();
 	}, [collection]);
 
-	return { docs };
+	return {docs, error};
 };
 
 export default useFirestore;

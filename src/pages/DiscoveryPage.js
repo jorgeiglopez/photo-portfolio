@@ -1,6 +1,7 @@
 import React from 'react';
 import useDiscovery from '../hooks/useDiscovery';
 import { useParams, Link } from 'react-router-dom';
+import CustomSnackbars from '../components/CustomSnackbars';
 
 const humanifyPictures = (pic) => {
 	let resp = pic.id + ': ';
@@ -12,24 +13,25 @@ const humanifyPictures = (pic) => {
 	return resp;
 };
 
-const Discovery = () => {
+const DiscoveryPage = () => {
 	const params = useParams();
-	const pictures = useDiscovery(params.albumName);
+	const {data: pictures, error} = useDiscovery(params.albumName);
 	console.log('--- PICTURES DISCOVERED: ', pictures);
 
 	const detail = pictures.map((pic) => <li>{humanifyPictures(pic)}</li>);
 
 	return (
 		<div>
+			{error && <CustomSnackbars message={error.message} />}
 			<h1>Album discovery page</h1>
 			<h3>Albums: {params.albumName}</h3>
 			<br />
 			<h4>Detail</h4>
 			<ul>{detail}</ul>
 			<br />
-			<Link to={`/all-albums/${params.albumName}`}>Go to album!</Link>
+			<Link to={`/albums/${params.albumName}`}>Go to album!</Link>
 		</div>
 	);
 };
 
-export default Discovery;
+export default DiscoveryPage;

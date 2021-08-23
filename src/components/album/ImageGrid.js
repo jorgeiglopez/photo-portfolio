@@ -5,10 +5,10 @@ import classes from './ImageGrid.module.css'
 import ProgressiveImage from 'react-progressive-image';
 
 const ImageGrid = (props) => {
-    const highResolution = props.highResolution || 'FULL';
+    const highResolution = props.highResolution || '2000px';
     const lowResolution = props.lowResolution || '800px';
 
-    const { docs } = useFirestore(props.albumName);
+    const { docs } = useFirestore(props.albumName); // TODO move the reading logic to AlbumPage - Implement set to avoid dupps
     return (
         <div className={classes['img-grid']}>
             {docs &&
@@ -23,7 +23,7 @@ const ImageGrid = (props) => {
                         }}>
                         <ProgressiveImage src={doc[highResolution].url} placeholder={doc[lowResolution].url}>
                             {(src, loading) => (
-                                <img className={loading? classes['img-loading']: ''} src={src} alt="Loading image..." />
+                                <img className={loading? classes['img-loading']: ''} src={src} alt="Loading..." />
                             )}
                         </ProgressiveImage>
                     </motion.div>

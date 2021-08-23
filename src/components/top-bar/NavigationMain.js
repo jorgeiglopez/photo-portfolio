@@ -8,7 +8,7 @@ const NavigationMain = () => {
 				<Link to='/home'>Photo Portfolio</Link>
 			</div>
 			<div className={classes.menu}>
-				<NavLink to='/all-albums' className={classes.link}>
+				<NavLink to='/albums' className={classes.link}>
 					<div className={classes.title}>Work</div>
 					<div className={classes.bar}></div>
 				</NavLink>

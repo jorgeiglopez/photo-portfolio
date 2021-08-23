@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 const useDiscovery = (albumName) => {
 	const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
 
 	useEffect(() => {
 		if (!albumName) return data;
@@ -34,9 +35,10 @@ const useDiscovery = (albumName) => {
 									url: url,
 								},
 							};
+                            console.log("useDiscovery - getDownloadURL: ", myPhoto);
 							dynamoRef.doc(myPhoto.id).set(myPhoto, { merge: true }); // save downloadURL
-							// accum.push(myPhoto)
 							setData((prevData) => [...prevData, myPhoto]);
+                            setError(null);
 						});
 						item.getMetadata().then((meta) => {
 							const resolution = getSufix(meta.name);
@@ -47,35 +49,46 @@ const useDiscovery = (albumName) => {
 									size: meta.size / 1000000,
 								},
 							};
+                            console.log("useDiscovery - getMetadata: ", myMeta);
 							dynamoRef.doc(myMeta.id).set(myMeta, { merge: true }); // save metadata
 						});
 					});
 				}
-			});
+			})
+            .catch(error => {
+                setError(error)
+            });
 	}, [albumName]);
 
-	return data;
+	return {data, error};
 };
 
 // To update all the albums in one go!
 
 export const useDiscoveryAll = () => {
 	const [data, setData] = useState([]);
+    const [error, setError] = useState(null);
 
 	useEffect(() => {
 		projectStorage
 			.ref()
 			.listAll()
 			.then((res) => {
+                setError(null);
 				if (res.prefixes) {
+                    console.log("useDiscoveryAll - reading folders: ", res.prefixes);
 					res.prefixes.forEach((al) => {
 						setData((prevData) => [...prevData, al.name]);
+                        setError(null);
 					});
 				}
-			});
+			})
+            .catch(error => {
+                setError(error)
+            });
 	}, []);
 
-	return data;
+	return {data, error};
 };
 
 export default useDiscovery;

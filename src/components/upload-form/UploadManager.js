@@ -3,21 +3,22 @@ import useStorage from '../../hooks/useStorage';
 import ProgressBar from './ProgressBar';
 
 const UploadManager = (props) => {
-	let { progress, url, error } = useStorage(props.file, props.album);
+	const {setFile, setError, file, album} = props;
+	let { progress, url, error } = useStorage(file, album);
 
 	useEffect(() => {
-		props.setError(error ? error : null);
-	}, [error, props.setError]);
+		setError(error ? error : null);
+	}, [error, setError]);
 
 	useEffect(() => {
 		if (url) {
-			props.setFile(null);
+			setFile(null);
 		}
-	}, [url, props.setFile]);
+	}, [url, setFile]);
 
 	return (
 		<React.Fragment>
-			Uploading: {props.file.name}...
+			Uploading: {file.name}...
 			<ProgressBar progress={progress} />
 		</React.Fragment>
 	);
