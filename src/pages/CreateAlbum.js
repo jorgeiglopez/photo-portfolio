@@ -2,18 +2,15 @@ import UploadForm from '../components/upload-form/UploadForm';
 import ImageGrid from '../components/album/ImageGrid';
 import ImageZoom from '../components/album/ImageZoom';
 import { useState } from 'react';
-import useDiscovery from '../hooks/useDiscovery';
 
 const CreateAlbum = () => {
-	const [album, setAlbum] = useState('');
+	const [album, setAlbum] = useState(null);
 	const [selectedImg, setSelectedImg] = useState(null);
-
-	// useDiscovery("tea-oil-cup");
 
 	return (
 		<div>
-			<UploadForm />
-			<ImageGrid setSelectedImg={setSelectedImg} albumName="tea-oil-cup"/>
+			<UploadForm album={album} setAlbum={setAlbum} />
+			<ImageGrid setSelectedImg={setSelectedImg} albumName={album} />
 			{selectedImg && <ImageZoom url={selectedImg} setSelectedImg={setSelectedImg} />}
 		</div>
 	);

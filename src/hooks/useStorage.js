@@ -6,7 +6,6 @@ const useStorage = (file, album) => {
 	const [error, setError] = useState(null);
 	const [url, setUrl] = useState(null);
 
-	
 	useEffect(() => {
 		const filePath = `${album}/${file.name}`;
 		const storageRef = projectStorage.ref().child(filePath);

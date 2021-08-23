@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-
+import React from 'react';
 import Headroom from 'react-headroom';
 import NavigationMain from './top-bar/NavigationMain';
 import FooterMain from './footer/FooterMain';

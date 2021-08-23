@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useStorage from '../../hooks/useStorage';
 import ProgressBar from './ProgressBar';
 

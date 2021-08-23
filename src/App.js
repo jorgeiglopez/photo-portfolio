@@ -44,7 +44,7 @@ function App() {
 						<Route path='/upload'>
 							<CreateAlbum />
 						</Route>
-                        <Route path='/discovery'>
+                        <Route path='/discovery/:albumName'>
 							<Discovery />
 						</Route>
 						<Route path='*'>
