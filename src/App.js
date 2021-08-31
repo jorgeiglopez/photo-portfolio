@@ -11,6 +11,8 @@ import ContactPage from './pages/ContactPage';
 import DiscoveryPage from './pages/DiscoveryPage';
 import FourOFour from './pages/404Page';
 import UploadPage from './pages/UploadPage';
+import LoginForm from './components/auth/LoginForm';
+import Login from './pages/Login';
 
 function App() {
 
@@ -50,6 +52,9 @@ function App() {
 						</Route>
 						<Route path='/discovery/:albumName'>
 							<DiscoveryPage />
+						</Route>
+						<Route path='/login'>
+							<Login />
 						</Route>
 						<Route path='*'>
 							<FourOFour />
