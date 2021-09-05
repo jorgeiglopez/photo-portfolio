@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import { useEffect, useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -12,25 +12,35 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+// severity="error"  --  This is an error message!
+// severity="warning"  --  This is a warning message!
+// severity="info"  --  This is an information message!
+// severity="success"  --  This is a success message!
+
 const CustomSnackbars = (props) => {
 	const classes = useStyles();
+	const [open, setOpen] = useState(false);
 
-	const handleClose = (event, reason) => {
+	useEffect(() => {
+		setOpen(!!props.message);
+	}, [props.message]);
+
+	const handleClose = (_event, reason) => {
 		if (reason === 'clickaway') {
 			return;
 		}
-		props.setErrorMessage(null);
+		setOpen(false);
 	};
 
 	return (
 		<div className={classes.root}>
 			<Snackbar
-				open={!!props.errorMessage}
-				autoHideDuration={6000}
+				open={open}
+				autoHideDuration={props.autoHide || 6000}
 				onClose={handleClose}
 				anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
 				<MuiAlert elevation={6} variant='filled' onClose={handleClose} severity={props.severity || 'error'}>
-					{props.errorMessage}
+					{props.message}
 				</MuiAlert>
 			</Snackbar>
 		</div>
