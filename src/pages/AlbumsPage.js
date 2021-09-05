@@ -1,5 +1,5 @@
 import { Link, useRouteMatch } from 'react-router-dom';
-import CustomSnackbars from '../components/CustomSnackbars';
+import CustomSnackbars from '../components/modal/CustomSnackbars';
 import { useDiscoveryAll } from '../hooks/useDiscovery';
 
 const capitalizeFirstLetter = (text) => text.charAt(0).toUpperCase() + text.slice(1);

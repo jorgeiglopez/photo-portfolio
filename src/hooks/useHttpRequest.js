@@ -1,29 +1,43 @@
-import React, { useEffect } from 'react'
+import { useEffect, useState } from 'react';
 
+const useHttpRequest = (request = null) => {
+	const [response, setResponse] = useState();
+	const [error, setError] = useState();
+	const [loading, setLoading] = useState(false);
 
-const useHttpRequest = (request) => {
-    const [response, setResponse] = useState();
-    const [error, setError] = useState();
+	useEffect(() => {
+		if (request && request.url) {
+            console.log("Sending request to: ", request.url);
+			setLoading(true);
+			fetch(request.url, {
+				method: request.method || 'GET',
+				headers: request.headers || null,
+				body: request.body ? JSON.stringify(request.body) : null,
+			})
+				.then((response) => {
+                    
+                    if (response.ok) {
+						response.json().then((parsed) => {
+                            setResponse(parsed);
+                            setLoading(false);
+                        });
+					} else {
+						response.json().then((parsed) => {
+							console.log('Error in the response: ', parsed);
+							setError(parsed.error.message);
+                            setLoading(false);
+						});
+					}
+				})
+				.catch((error) => {
+					setLoading(false);
+					console.log('Error: ', error);
+					setError('User creation failed: ' + error);
+				});
+		}
+	}, [JSON.stringify(request)]);
 
-    useEffect(() => {
-        fetch(request.url, {
-            method: request.method || 'GET',
-            headers: request.headers || null,
-            body: request.body? JSON.stringify(request.body) : null,
-        }).then(response => {
-            if(response.ok){
-                setResponse(response);
-            } else{
-                response.json().then(data => console.log("ERROR: ", data))
-            }
-        }).catch(error => {
-            // todo: do something!
-            console.log("CATCH: ", error)
-        })
-    }, [JSON.stringify(request)])
+	return { response, error, loading, setError };
+};
 
-    return {response, error}
-    
-}
-
-export default useHttpRequest
+export default useHttpRequest;

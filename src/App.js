@@ -2,7 +2,6 @@ import React, { Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import Layout from './components/Layout';
 import LoadingSpinner from './components/LoadingSpinner';
-
 import HomePage from './pages/HomePage';
 import AboutMePage from './pages/AboutMePage';
 import AlbumsPage from './pages/AlbumsPage';
@@ -11,11 +10,10 @@ import ContactPage from './pages/ContactPage';
 import DiscoveryPage from './pages/DiscoveryPage';
 import FourOFour from './pages/404Page';
 import UploadPage from './pages/UploadPage';
-import LoginForm from './components/auth/LoginForm';
 import Login from './pages/Login';
+import SignUp from './pages/SignUp';
 
 function App() {
-
 	// TODO: Load the firestore info here for quick response
 	// TODO: Add Error Boundaries
 
@@ -55,6 +53,9 @@ function App() {
 						</Route>
 						<Route path='/login'>
 							<Login />
+						</Route>
+						<Route path='/signup'>
+							<SignUp />
 						</Route>
 						<Route path='*'>
 							<FourOFour />

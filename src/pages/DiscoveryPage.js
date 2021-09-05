@@ -1,7 +1,7 @@
 import React from 'react';
 import useDiscovery from '../hooks/useDiscovery';
 import { useParams, Link } from 'react-router-dom';
-import CustomSnackbars from '../components/CustomSnackbars';
+import CustomSnackbars from '../components/modal/CustomSnackbars';
 
 const humanifyPictures = (pic) => {
 	let resp = pic.id + ': ';
