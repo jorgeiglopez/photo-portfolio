@@ -11,6 +11,7 @@ import { useRef, useState, useContext } from 'react';
 import CustomSnackbars from '../modal/CustomSnackbars';
 import useHttpRequest from '../../hooks/useHttpRequest';
 import AuthContext from '../../contex/auth-context';
+import { getSignUpURL } from '../../firebase/config';
 
 const useStyles = makeStyles((theme) => ({
 	paper: {
@@ -55,7 +56,7 @@ export default function SignUpForm() {
 			passwordRef.current.value === passwordTwoRef.current.value
 		) {
 			const req = {
-				url: 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA3cC5XTi5dH3R8DXBhQb90hNDTt77_ulA',
+				url: getSignUpURL(),
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

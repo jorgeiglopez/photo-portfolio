@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import { useRef, useState, useContext } from 'react';
 import useHttpRequest from '../../hooks/useHttpRequest';
 import AuthContext from '../../contex/auth-context';
+import { getLoginURL } from '../../firebase/config';
 
 function Copyright() {
 	return (
@@ -60,7 +61,7 @@ export default function LoginForm() {
 	const [request, setRequest] = useState();
 	const { response, error, loading, setError } = useHttpRequest(request);
 
-	if(!loading && response.token){
+	if(!loading && response && response.token){
 		console.log("Logging in function")
 		authCtx.logIn(response.idToken);
 	}
@@ -75,7 +76,7 @@ export default function LoginForm() {
 			passwordRef.current.value
 		) {
 			const req = {
-				url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA3cC5XTi5dH3R8DXBhQb90hNDTt77_ulA',
+				url: getLoginURL(),
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
