@@ -2,16 +2,24 @@
 --------------------------------
 implement react-progressive-image (DONE)
 
-
-
-
 2 - Image resizing on load (lambda or equivalent on firebase)
 --------------------------------
-Change firestore database document id, from auto-generated to file name (DONE)
-Or allow to upload different sizes at once. (Bulk upload)
+implemented bulk upload and scan over firebase-store bucket. (DONE)
 
 
 
 3 - Local cache for images
+3.1 - Fetch all images/albums available at the beginning (useContext)
 --------------------------------
 
+4 - Test what's faster: images in store or in the public folder: same deployment folder
+4.1 - Lazy loading for images
+
+5 - Auth for scan feature (album upload equivalent)
+
+6 - Deploy the app + implement hashing name for bundle.
+
+7 - 
+
+
+Proper error handling + boundaries

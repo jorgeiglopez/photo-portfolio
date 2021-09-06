@@ -10,10 +10,11 @@ const AuthContext = React.createContext({
 export const AuthContextProvider = (props) => {
 	const [token, setToken] = useState(null);
 
+	// TODO: implement refresh token
 	const ctxValue = {
 		token: token,
 		isLoggedIn: !!token,
-		logIn: (token) => {setToken(token); console.log('Setting token: ', token)},
+		logIn: (token) => setToken(token),
 		logOut: () => setToken(null),
 	};
 
