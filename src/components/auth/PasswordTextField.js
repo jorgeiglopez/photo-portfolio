@@ -1,7 +1,26 @@
 import TextField from '@material-ui/core/TextField';
+import React, { useRef, useState } from 'react';
 
 const PasswordTextField = (props) => {
+	const p1 = useRef();
+	const p2 = useRef();
+	const [match, setMatch] = useState(true);
+
+	const validatePasswordsMatch = () => {
+		if (p1.current.value.trim().length === 0 || p2.current.value.trim().length === 0) {
+			return;
+		}
+		if (p1.current.value === p2.current.value) {
+			setMatch(true);
+		} else {
+			setMatch(false);
+		}
+	};
+
 	const validatePassword = (input) => {
+		if (props.repeat) {
+			validatePasswordsMatch();
+		}
 		if (!input || input.trim().length === 0) {
 			props.setPasswordError('(*) Password is required');
 		} else if (input.trim().length < 6) {
@@ -12,17 +31,14 @@ const PasswordTextField = (props) => {
 		return input;
 	};
 
-	const onChangeHandler = (event) => {
+	const onChangeHandler1 = (event) => {
 		props.setPassword(validatePassword(event.target.value));
-	};
-
-	const onBlurHandler = (_event) => {
-		validatePassword(props.password);
 	};
 
 	const fieldsToRender = [];
 	fieldsToRender.push(
 		<TextField
+			inputRef={p1}
 			id='password'
 			label='Password'
 			name='password'
@@ -35,10 +51,28 @@ const PasswordTextField = (props) => {
 			margin='normal'
 			fullWidth
 			type='password'
-			onChange={onChangeHandler}
-			onBlur={onBlurHandler}
+			onChange={onChangeHandler1}
+			onBlur={(event)=>validatePassword(event.target.value)}
 		/>
 	);
+	if (props.repeat === true) {
+		fieldsToRender.push(
+			<TextField
+				inputRef={p2}
+				id='password2'
+				label='Repeat password'
+				name='password2'
+				required
+				error={!match}
+				helperText={!match && 'Both passwords should match'}
+				variant='outlined'
+				margin='normal'
+				fullWidth
+				type='password'
+				onChange={event => validatePasswordsMatch()}
+			/>
+		);
+	}
 
 	return <>{fieldsToRender}</>;
 };

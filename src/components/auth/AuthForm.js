@@ -49,6 +49,7 @@ const AuthForm = () => {
 	useEffect(() => {
 		if (response && response.idToken) {
 			console.log('--- USER LOGGED IN!! ---');
+			console.log(response.idToken)
 			authCtx.logIn(response.idToken);
 		}
 	}, [JSON.stringify(response)]);
@@ -101,7 +102,7 @@ const AuthForm = () => {
 							setPassword={setPassword}
 							passwordError={passwordError}
 							setPasswordError={setPasswordError}
-							isLoginMode={isLoginMode}
+							repeat={!isLoginMode}
 						/>
 						<Button
 							disabled={!isFormValid}

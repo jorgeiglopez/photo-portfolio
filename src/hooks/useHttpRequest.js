@@ -7,7 +7,7 @@ const useHttpRequest = (request = null) => {
 
 	useEffect(() => {
 		if (request && request.url) {
-            console.log("Sending request to: ", request.url);
+			console.log('Sending request to: ', request.url);
 			setLoading(true);
 			fetch(request.url, {
 				method: request.method || 'GET',
@@ -15,24 +15,22 @@ const useHttpRequest = (request = null) => {
 				body: request.body ? JSON.stringify(request.body) : null,
 			})
 				.then((response) => {
-                    
-                    if (response.ok) {
-						response.json().then((parsed) => {
-                            setResponse(parsed);
-                            setLoading(false);
-                        });
+					if (response.ok) {
+						return response.json();
 					} else {
-						response.json().then((parsed) => {
-							console.log('Error in the response: ', parsed);
-							setError(parsed.error.message);
-                            setLoading(false);
+						return response.json().then((parsed) => {
+							throw new Error(parsed.error.message);
 						});
 					}
 				})
+				.then((response) => {
+					setLoading(false);
+					setResponse(response);
+				})
 				.catch((error) => {
 					setLoading(false);
-					console.log('Error: ', error);
-					setError('User creation failed: ' + error);
+					setError(error.message);
+					console.error(error.message);
 				});
 		}
 	}, [JSON.stringify(request)]);
