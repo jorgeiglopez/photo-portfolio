@@ -9,27 +9,26 @@
   position: absolute;
   top: 0;
   left: 0;
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 100;
   padding: 26px;
-  border-right: 1px solid black;
 }
 
 .link {
   display: inline-block;
-  padding: 15px 0;
+  padding: 12px 0;
   margin: 15px 25px;
   position: relative;
   text-decoration: none;
   text-transform: uppercase;
   color: #0f0f0f;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 20px;
 }
 .link .bar {
   width: 100%;
   display: inline-block;
-  border-bottom: 5px solid black;
+  border-bottom: 3px solid black;
   position: absolute;
   bottom: 0;
   left: 0;

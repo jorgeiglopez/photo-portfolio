@@ -8,7 +8,7 @@ import useHttpRequest from '../../hooks/useHttpRequest';
 import AuthContext from '../../contex/auth-context';
 import CustomSnackbars from '../modal/CustomSnackbars';
 import { getLoginURL, getSignUpURL } from '../../firebase/config';
-import { useLocation } from 'react-router';
+import { useHistory, useLocation } from 'react-router';
 import EmailTextField from './EmailTextField';
 import PasswordTextField from './PasswordTextField';
 import FormAvatar from './FormAvatar';
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const AuthForm = () => {
+	const history = useHistory();
 	const classes = useStyles();
 	const authCtx = useContext(AuthContext);
 	const isLoginMode = useLocation().pathname === '/login';
@@ -48,9 +49,8 @@ const AuthForm = () => {
 
 	useEffect(() => {
 		if (response && response.idToken) {
-			console.log('--- USER LOGGED IN!! ---');
-			console.log(response.idToken)
-			authCtx.logIn(response.idToken);
+			authCtx.logIn(response);
+			history.replace('/profile'); // Redirect that allows going back.
 		}
 	}, [JSON.stringify(response)]);
 
