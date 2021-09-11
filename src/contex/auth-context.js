@@ -2,27 +2,28 @@ import React, { useState } from 'react';
 
 let logoutTimer;
 
-const getExpiryFromLocalStorage = () => {
+const clearAuthDataAndExpiry = () => {
+	localStorage.removeItem('auth');
+	localStorage.removeItem('expiry');
+	if (logoutTimer) {
+		clearTimeout(logoutTimer);
+	}
+};
+
+const validateTokenExpiry = () => {
 	const exp = localStorage.getItem('expiry');
-	const remainingTime = exp ? new Date(exp).getTime() - new Date().getTime() : 0;
-	if (remainingTime > 1000) {
-		localStorage.setItem('expiry', remainingTime);
-	} 
-	// else {
-	// 	localStorage.removeItem('auth');
-	// 	localStorage.removeItem('expiry');
-	// }
-	return remainingTime;
+	const remainingTime = exp ? exp - new Date().getTime() : 0;
+	if (remainingTime > 0) {
+		return exp;
+	} else {
+		clearAuthDataAndExpiry();
+		return null;
+	}
 };
 
 const getTokenFromLocalStorage = () => {
 	const authData = localStorage.getItem('auth');
-	const expiry = getExpiryFromLocalStorage();
-	if (authData) {
-		return JSON.parse(authData).idToken;
-	} else {
-		return null;
-	}
+	return authData? JSON.parse(authData).idToken : null;
 };
 
 const AuthContext = React.createContext({
@@ -33,29 +34,24 @@ const AuthContext = React.createContext({
 });
 
 export const AuthContextProvider = (props) => {
+	validateTokenExpiry();
 	const [token, setToken] = useState(getTokenFromLocalStorage());
 
 	const logOutHandler = () => {
 		setToken(null);
-		localStorage.removeItem('auth');
-		localStorage.removeItem('expiry');
-		if (logoutTimer) {
-			clearTimeout(logoutTimer);
-		}
+		clearAuthDataAndExpiry();
 	};
 
-	const setExpirationTimer = (expiresInSec) => {
-		const remainingMil = parseInt(expiresInSec) * 1000;
-		const expiryMil = new Date().getTime() + remainingMil;
-		logoutTimer = setTimeout(logOutHandler, remainingMil);
-		localStorage.setItem('expiry', expiryMil);
+	const setExpirationTimer = (expiresInMil) => {
+		logoutTimer = setTimeout(logOutHandler, expiresInMil);
+		const expiry = new Date().getTime() + expiresInMil;
+		localStorage.setItem('expiry', expiry);
 	};
 
 	const logInHandler = (authData) => {
-		console.log(authData);
-		setToken(authData.idToken);
 		localStorage.setItem('auth', JSON.stringify(authData));
-		setExpirationTimer(authData.expiresIn);
+		setToken(authData.idToken);
+		setExpirationTimer(parseInt(authData.expiresIn) * 1000);
 	};
 
 	// TODO: implement refresh token
